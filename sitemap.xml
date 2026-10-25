@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://intrecci.github.io/</loc>
+    <lastmod>2026-10-25</lastmod>
+    <image:image><image:loc>https://intrecci.github.io/assets/img/borsa-zebra-pop-01.jpg</image:loc></image:image>
+    <image:image><image:loc>https://intrecci.github.io/assets/img/borsa-leo-pop-01.jpg</image:loc></image:image>
+    <image:image><image:loc>https://intrecci.github.io/assets/img/borsa-black-pop-01.jpg</image:loc></image:image>
+    <image:image><image:loc>https://intrecci.github.io/assets/img/borsa-zebra-pop-02.jpg</image:loc></image:image>
+    <image:image><image:loc>https://intrecci.github.io/assets/img/borsa-zebra-pop-03.jpg</image:loc></image:image>
+    <image:image><image:loc>https://intrecci.github.io/assets/img/borsa-leo-pop-02.jpg</image:loc></image:image>
+    <image:image><image:loc>https://intrecci.github.io/assets/img/leather-clutch-leo.jpg</image:loc></image:image>
+    <image:image><image:loc>https://intrecci.github.io/assets/img/leather-clutch-brown.jpg</image:loc></image:image>
+    <image:image><image:loc>https://intrecci.github.io/assets/img/leather-clutch-bordeaux.jpg</image:loc></image:image>
+    <image:image><image:loc>https://intrecci.github.io/assets/img/leather-clutch-black.jpg</image:loc></image:image>
+    <image:image><image:loc>https://intrecci.github.io/assets/img/leather-clutch-midnight-blue.jpg</image:loc></image:image>
+  </url>
+</urlset>

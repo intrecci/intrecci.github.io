@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /anteprima.html
+
+Sitemap: https://intrecci.github.io/sitemap.xml

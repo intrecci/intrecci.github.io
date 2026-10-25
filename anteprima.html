@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Intrecci – Anteprima desktop e mobile</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
+  <style>
+    :root { --bg: #e9e6e1; --ink: #141414; --red: #e3061b; --line: #d6d2cb; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; background: var(--bg); color: var(--ink);
+      font-family: "Archivo", system-ui, sans-serif; -webkit-font-smoothing: antialiased;
+    }
+    .bar {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+      padding: 18px clamp(16px, 3vw, 40px);
+    }
+    .bar-brand { display: flex; align-items: center; gap: 16px; }
+    .bar-brand img { height: 34px; width: auto; }
+    .bar-brand span { font-size: 12px; letter-spacing: .26em; text-transform: uppercase; color: #6b6966; }
+    .modes { display: inline-flex; border: 1px solid var(--ink); }
+    .modes button {
+      font: inherit; font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+      padding: 10px 16px; border: 0; background: transparent; color: var(--ink); cursor: pointer;
+    }
+    .modes button + button { border-left: 1px solid var(--ink); }
+    .modes button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+    .open-site {
+      font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--red); padding-bottom: 2px;
+    }
+
+    .stage {
+      display: flex; align-items: flex-end; justify-content: center; gap: clamp(24px, 4vw, 64px);
+      padding: clamp(12px, 3vw, 40px) clamp(16px, 3vw, 40px) 56px;
+    }
+    .label {
+      margin: 14px 0 0; text-align: center;
+      font-size: 11px; font-weight: 600; letter-spacing: .26em; text-transform: uppercase; color: #6b6966;
+    }
+
+    /* Desktop: finestra browser */
+    .desktop { flex: 1 1 auto; max-width: 1180px; min-width: 0; }
+    .browser {
+      background: #fff; border-radius: 10px; overflow: hidden;
+      box-shadow: 0 50px 100px -40px rgba(0,0,0,.45), 0 0 0 1px rgba(0,0,0,.06);
+    }
+    .browser-bar {
+      display: flex; align-items: center; gap: 7px; height: 38px; padding: 0 14px;
+      background: #f3f1ee; border-bottom: 1px solid #e3e0db;
+    }
+    .browser-bar i { width: 11px; height: 11px; border-radius: 50%; background: #d9d5cf; }
+    .browser-bar i:first-child { background: #ff5f57; }
+    .browser-bar i:nth-child(2) { background: #febc2e; }
+    .browser-bar i:nth-child(3) { background: #28c840; }
+    .url {
+      flex: 1; max-width: 420px; margin: 0 auto; height: 24px; border-radius: 6px; background: #fff;
+      display: grid; place-items: center; font-size: 12px; color: #6b6966; border: 1px solid #e3e0db;
+    }
+
+    /* Mobile: telefono */
+    .mobile { flex: 0 0 auto; width: clamp(240px, 24vw, 330px); }
+    .phone {
+      position: relative; padding: 12px; border-radius: 48px; background: #111;
+      box-shadow: 0 50px 100px -40px rgba(0,0,0,.55), inset 0 0 0 2px #2a2a2a;
+    }
+    .phone-inner { border-radius: 36px; overflow: hidden; background: #fff; }
+    .status {
+      position: relative; height: 34px; background: #fff;
+      display: flex; align-items: center; justify-content: space-between; padding: 0 26px;
+      font-size: 11px; font-weight: 600;
+    }
+    .island {
+      position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+      width: 30%; height: 20px; border-radius: 20px; background: #000;
+    }
+    .status-icons { display: flex; gap: 4px; align-items: center; }
+    .status-icons b { display: block; width: 14px; height: 8px; border-radius: 2px; border: 1.5px solid var(--ink); }
+
+    .screen { position: relative; overflow: hidden; background: #fff; }
+    .screen iframe {
+      position: absolute; top: 0; left: 0; border: 0; transform-origin: 0 0; background: #fff;
+    }
+
+    [data-mode="desktop"] .mobile, [data-mode="mobile"] .desktop { display: none; }
+    [data-mode="mobile"] .mobile { width: min(390px, 100%); }
+
+    @media (max-width: 760px) {
+      .stage { flex-direction: column; align-items: center; }
+      .desktop { width: 100%; }
+      .mobile { width: min(320px, 86vw); }
+    }
+  </style>
+</head>
+<body>
+  <header class="bar">
+    <div class="bar-brand">
+      <img src="assets/img/logo-intrecci-nero.png" alt="Intrecci" width="541" height="193">
+      <span>Anteprima sito</span>
+    </div>
+    <div class="modes" role="group" aria-label="Dispositivo">
+      <button type="button" data-set="both" aria-pressed="true">Desktop + Mobile</button>
+      <button type="button" data-set="desktop" aria-pressed="false">Desktop</button>
+      <button type="button" data-set="mobile" aria-pressed="false">Mobile</button>
+    </div>
+    <a class="open-site" href="index.html" target="_blank" rel="noopener">Apri il sito ↗</a>
+  </header>
+
+  <main class="stage" id="stage" data-mode="both">
+    <section class="desktop" aria-label="Anteprima desktop">
+      <div class="browser">
+        <div class="browser-bar"><i></i><i></i><i></i><div class="url">Intrecci · Borse fatte a mano</div></div>
+        <div class="screen" data-w="1440" data-h="900">
+          <iframe src="index.html" title="Sito Intrecci – versione desktop" width="1440" height="900"></iframe>
+        </div>
+      </div>
+      <p class="label">Desktop · 1440 px</p>
+    </section>
+
+    <section class="mobile" aria-label="Anteprima mobile">
+      <div class="phone">
+        <div class="phone-inner">
+          <div class="status" aria-hidden="true"><span>9:41</span><span class="island"></span><span class="status-icons"><b></b></span></div>
+          <div class="screen" data-w="390" data-h="810">
+            <iframe src="index.html" title="Sito Intrecci – versione mobile" width="390" height="810"></iframe>
+          </div>
+        </div>
+      </div>
+      <p class="label">Mobile · 390 px</p>
+    </section>
+  </main>
+
+  <script>
+    // Ogni iframe viene renderizzato alla sua misura reale e poi rimpicciolito per stare nella cornice.
+    var screens = document.querySelectorAll('.screen');
+    function fit() {
+      screens.forEach(function (s) {
+        var w = +s.dataset.w, h = +s.dataset.h, k = s.clientWidth / w;
+        var f = s.querySelector('iframe');
+        f.style.transform = 'scale(' + k + ')';
+        s.style.height = (h * k) + 'px';
+      });
+    }
+    if ('ResizeObserver' in window) {
+      var ro = new ResizeObserver(fit);
+      screens.forEach(function (s) { ro.observe(s); });
+    }
+    window.addEventListener('resize', fit);
+    fit();
+
+    var stage = document.getElementById('stage');
+    document.querySelectorAll('.modes button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        stage.dataset.mode = b.dataset.set;
+        document.querySelectorAll('.modes button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+        fit();
+      });
+    });
+  </script>
+</body>
+</html>
